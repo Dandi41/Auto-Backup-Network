@@ -1,0 +1,2669 @@
+{
+  "name": "Auto backup",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "c5ea5f02-2b82-4d65-8c9e-08108fd6151c",
+                    "leftValue": "={{ $json.callback_query.data }}",
+                    "rightValue": "backup-now",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "d2b2f058-6402-4955-b99a-3a4f15530269",
+                    "leftValue": "={{ $json.callback_query.data }}",
+                    "rightValue": "download-backup",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "6faea323-a29c-4f9a-b775-f7440f45aaa4",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/add",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "d60fa09a-1b62-4f03-be7d-109eaac6c3ba",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/remove",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "13886f0c-5051-4183-a5ae-7c6dc3888606",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/menu",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        400
+      ],
+      "id": "3e5f447b-1503-4a1d-acb5-831f6426abea",
+      "name": "Switch",
+      "alwaysOutputData": false,
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "updates": [
+          "callback_query",
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        128,
+        448
+      ],
+      "id": "f8b0d21a-e0ea-4721-9aa6-a6a8091c72ab",
+      "name": "Telegram Trigger",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "=🏠 Main Menu\nNetBackup Bot Redy buat bantu!!😊\n🗓️ Auto Backup dilakukan setiap tanggal 1\nUntuk menambah device silahkan gunakan /add dan untuk menghapus /remove",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Backup Sekarang",
+                    "additionalFields": {
+                      "callback_data": "backup-now"
+                    }
+                  },
+                  {
+                    "text": "Download Backup terakhir",
+                    "additionalFields": {
+                      "callback_data": "download-backup"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1248,
+        1760
+      ],
+      "id": "d4568f20-86eb-4e10-9c95-41211a035fcc",
+      "name": "Menu",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "=💾 [Backup In Progress]\nSistem sedang mencadangkan data konfigurasi saat ini. Mohon tunggu sebentar hingga proses selesai.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        688,
+        384
+      ],
+      "id": "41f95330-bb9f-48c9-9bea-d8587d671ac8",
+      "name": "Backup sekarang",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $now }}",
+        "format": "custom",
+        "customFormat": "cccc dd-MM-yyyy",
+        "outputFieldName": "=Hari ini",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        896,
+        176
+      ],
+      "id": "8ec074e8-a4e3-4aff-91fd-4b7632613eb7",
+      "name": "Date & Time"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "data auto backup",
+          "cachedResultUrl": "/projects/HTAERSZoIWqIJ76i/datatables/NihJtwrLAPLZfNVN"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "address",
+              "keyValue": "={{ $('Get Credential').item.json.address }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "date_last_backup": "={{ $now }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date_last_backup",
+              "displayName": "date_last_backup",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "address",
+              "displayName": "address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "port",
+              "displayName": "port",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "password",
+              "displayName": "password",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "brand",
+              "displayName": "brand",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "portftp",
+              "displayName": "portftp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        928,
+        -368
+      ],
+      "id": "9c691948-1e30-445d-a390-a2e147db16bb",
+      "name": "Update tanggal Backup terakhir"
+    },
+    {
+      "parameters": {
+        "path": "=Bot n8n {{ $('Date & Time').item.json['Hari ini'] }}.backup",
+        "binaryPropertyName": "=file-backup",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        560,
+        -368
+      ],
+      "id": "56099cb9-e097-4665-bf87-ab7af4428fc4",
+      "name": "Download Backup",
+      "credentials": {
+        "ftp": {
+          "id": "MTRIXCJp00IcxFaG",
+          "name": "FTP ujicoba"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "path": "=Backup-n8n-{{ $('Get Credential').item.json.address }}-{{ $('Date & Time').item.json['Hari ini'] }}.backup",
+        "binaryPropertyName": "=file-backup",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        736,
+        -368
+      ],
+      "id": "7c8d5353-29dc-4612-8061-6b79c9baae78",
+      "name": "Upload Backup to Server",
+      "credentials": {
+        "ftp": {
+          "id": "ONzMk7iVm5Jdiyu9",
+          "name": "Transfer to Server"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "=✅ Backup Berhasil! dan disimpan pada server pada tanggal {{ $json.date_last_backup }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": []
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1088,
+        -368
+      ],
+      "id": "7d2137d0-d219-415b-9361-ece9fa88a922",
+      "name": "Backup berhasil",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        496
+      ],
+      "id": "8c2c48d8-61bb-4c24-a78a-46d1785f424d",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "=⚠️⚠️Error⚠️⚠️\n{{ $json.execution.url }}\n{{ $json.execution.error.level }}\n{{ $json.execution.error.message }}\nNode terakhir yang di eksekusi :{{ $json.execution.lastNodeExecuted }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -112,
+        496
+      ],
+      "id": "37020e63-99fd-4d83-9d68-4c4cf23162b0",
+      "name": "Node Error",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "data auto backup",
+          "cachedResultUrl": "/projects/HTAERSZoIWqIJ76i/datatables/NihJtwrLAPLZfNVN"
+        },
+        "filters": {
+          "conditions": []
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        1760
+      ],
+      "id": "180f2ec7-751f-4832-a97a-cdb6b70d59d7",
+      "name": "Get Waktu Backup terakhir",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "=😰 Nampaknya tidak ada backup yang tersedia",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": []
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1456,
+        560
+      ],
+      "id": "118c2ff3-139e-42ed-b2c3-d6698b6f8558",
+      "name": "Tidak ada Backup",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n## Kirim Backup",
+        "height": 416,
+        "width": 1008
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        640,
+        528
+      ],
+      "id": "d3995d1e-88be-4e49-843b-01fe2f64b928",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Backup dan Kirim ke server",
+        "height": 416,
+        "width": 1108,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        640,
+        112
+      ],
+      "id": "a70dad40-6aa3-48d2-a813-c7715a481837",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months",
+              "triggerAtHour": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        688,
+        176
+      ],
+      "id": "56bdec51-97cf-4f7f-8ebd-a2673d610494",
+      "name": "Run Tanggal 1"
+    },
+    {
+      "parameters": {
+        "content": "## Main Menu",
+        "height": 224,
+        "width": 788,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        640,
+        1696
+      ],
+      "id": "948578bb-3868-4c80-a66a-179e2570a165",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Notif jika terjadi Error pada workflow",
+        "height": 224,
+        "width": 448
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        432
+      ],
+      "id": "ae869f15-deb5-49aa-a17b-7a5cb5d11f18",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "data auto backup",
+          "cachedResultUrl": "/projects/HTAERSZoIWqIJ76i/datatables/NihJtwrLAPLZfNVN"
+        },
+        "filters": {
+          "conditions": []
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        672
+      ],
+      "id": "d7a49a5a-cd34-4c39-9cce-c02ca08f1168",
+      "name": "Get Backup terakhir"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "aadd3c04-d0f2-4de3-bad7-e188bcab8dd6",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "No such file or directory",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1216,
+        672
+      ],
+      "id": "a18ce219-6ff2-425d-8035-1a887c84c9e1",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "data auto backup",
+          "cachedResultUrl": "/projects/HTAERSZoIWqIJ76i/datatables/NihJtwrLAPLZfNVN"
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1072,
+        176
+      ],
+      "id": "230f2e82-d7e4-428d-9891-7148f855d94e",
+      "name": "Get Credential"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1328,
+        176
+      ],
+      "id": "fc72c1e6-9809-4135-9478-d3239ca07486",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "command": "=copy running-config flash:Backup-n8n-{{ $('Date & Time').item.json['Hari ini'] }}.cfg",
+        "cwd": "="
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        384,
+        -528
+      ],
+      "id": "5d4a289d-ecd4-4829-8938-42cfb0020cd9",
+      "name": "SSH to Cisco",
+      "alwaysOutputData": false,
+      "retryOnFail": false,
+      "executeOnce": false,
+      "credentials": {
+        "sshPassword": {
+          "id": "nDEM6aD44qVB6Sjt",
+          "name": "Router ujicoba"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=system backup save name=\"Backup-n8n-{{ $('Date & Time').item.json['Hari ini'] }}\"",
+        "cwd": "="
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        384,
+        -368
+      ],
+      "id": "729cd1ee-1504-49b0-9215-07b7d824dbd9",
+      "name": "SSH to Mikrotik",
+      "alwaysOutputData": false,
+      "retryOnFail": false,
+      "executeOnce": false,
+      "credentials": {
+        "sshPassword": {
+          "id": "nDEM6aD44qVB6Sjt",
+          "name": "Router ujicoba"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=show configuration | save Backup-n8n-{{ $('Date & Time').item.json['Hari ini'] }}.conf",
+        "cwd": "="
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        384,
+        -224
+      ],
+      "id": "b69a8753-0ea6-4e5f-b2a3-4e4b6431d3a6",
+      "name": "SSH to Juniper",
+      "alwaysOutputData": false,
+      "retryOnFail": false,
+      "executeOnce": false,
+      "credentials": {
+        "sshPassword": {
+          "id": "nDEM6aD44qVB6Sjt",
+          "name": "Router ujicoba"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=save Backup-n8n-{{ $('Date & Time').item.json['Hari ini'] }}.cfg",
+        "cwd": "="
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        384,
+        -64
+      ],
+      "id": "3cb46e9b-e2b3-4c87-99cc-fd4f61c79001",
+      "name": "SSH to Huawei",
+      "alwaysOutputData": false,
+      "retryOnFail": false,
+      "executeOnce": false,
+      "credentials": {
+        "sshPassword": {
+          "id": "nDEM6aD44qVB6Sjt",
+          "name": "Router ujicoba"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "13886f0c-5051-4183-a5ae-7c6dc3888606",
+                    "leftValue": "={{ $json.brand }}",
+                    "rightValue": "cisco",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "c5ea5f02-2b82-4d65-8c9e-08108fd6151c",
+                    "leftValue": "={{ $json.brand }}",
+                    "rightValue": "mikrotik",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "d2b2f058-6402-4955-b99a-3a4f15530269",
+                    "leftValue": "={{ $json.brand }}",
+                    "rightValue": "juniper",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "bb499342-a568-4f62-9396-0cafbfa6f830",
+                    "leftValue": "={{ $json.brand }}",
+                    "rightValue": "huawei",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        144,
+        -352
+      ],
+      "id": "e035ab5c-22ef-4f4f-be73-77672e5311ea",
+      "name": "Find Brand",
+      "alwaysOutputData": false,
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        1760
+      ],
+      "id": "0cae1f76-3604-4304-8172-f4601bbc0bc8",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "data auto backup",
+          "cachedResultUrl": "/projects/HTAERSZoIWqIJ76i/datatables/NihJtwrLAPLZfNVN"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "address",
+              "keyValue": "={{ $('Get Credential').item.json.address }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "date_last_backup": "={{ $now }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date_last_backup",
+              "displayName": "date_last_backup",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "address",
+              "displayName": "address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "port",
+              "displayName": "port",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "password",
+              "displayName": "password",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "brand",
+              "displayName": "brand",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "portftp",
+              "displayName": "portftp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        928,
+        -528
+      ],
+      "id": "de0bac7d-1d42-4a7f-8e00-9811b8c38870",
+      "name": "Update tanggal Backup terakhir1"
+    },
+    {
+      "parameters": {
+        "path": "=Backup-n8n-{{ $('Date & Time').item.json['Hari ini'] }}.cfg",
+        "binaryPropertyName": "=file-backup",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        560,
+        -528
+      ],
+      "id": "53deb40b-e4e7-44c5-9a20-205bd3359197",
+      "name": "Download Backup1",
+      "credentials": {
+        "ftp": {
+          "id": "MTRIXCJp00IcxFaG",
+          "name": "FTP ujicoba"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "path": "=Backup-n8n-{{ $('Get Credential').item.json.address }}-{{ $('Date & Time').item.json['Hari ini'] }}.cfg",
+        "binaryPropertyName": "=file-backup",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        736,
+        -528
+      ],
+      "id": "c73b06bf-6eee-4d7a-9c90-27e232234d00",
+      "name": "Upload Backup to Server1",
+      "credentials": {
+        "ftp": {
+          "id": "ONzMk7iVm5Jdiyu9",
+          "name": "Transfer to Server"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "=✅ Backup Berhasil! dan disimpan pada server pada tanggal {{ $json.date_last_backup }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": []
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1088,
+        -528
+      ],
+      "id": "1db57483-1015-40bc-b4e6-fffffd715444",
+      "name": "Backup berhasil1",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "data auto backup",
+          "cachedResultUrl": "/projects/HTAERSZoIWqIJ76i/datatables/NihJtwrLAPLZfNVN"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "address",
+              "keyValue": "={{ $('Get Credential').item.json.address }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "date_last_backup": "={{ $now }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date_last_backup",
+              "displayName": "date_last_backup",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "address",
+              "displayName": "address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "port",
+              "displayName": "port",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "password",
+              "displayName": "password",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "brand",
+              "displayName": "brand",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "portftp",
+              "displayName": "portftp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        928,
+        -64
+      ],
+      "id": "a31a7078-87d0-41c7-b82c-e1c3c6fb2822",
+      "name": "Update tanggal Backup terakhir2"
+    },
+    {
+      "parameters": {
+        "path": "=Backup-n8n-{{ $('Date & Time').item.json['Hari ini'] }}.cfg",
+        "binaryPropertyName": "=file-backup",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        560,
+        -64
+      ],
+      "id": "08432e3a-a41d-4ac0-b4b8-bce237d4950d",
+      "name": "Download Backup2",
+      "credentials": {
+        "ftp": {
+          "id": "MTRIXCJp00IcxFaG",
+          "name": "FTP ujicoba"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "path": "=Backup-n8n-{{ $('Get Credential').item.json.address }}-{{ $('Date & Time').item.json['Hari ini'] }}.cfg",
+        "binaryPropertyName": "=file-backup",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        736,
+        -64
+      ],
+      "id": "b74bfd76-6d9c-455f-b614-4d1c61969c2a",
+      "name": "Upload Backup to Server2",
+      "credentials": {
+        "ftp": {
+          "id": "ONzMk7iVm5Jdiyu9",
+          "name": "Transfer to Server"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "=✅ Backup Berhasil! dan disimpan pada server pada tanggal {{ $json.date_last_backup }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": []
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1088,
+        -64
+      ],
+      "id": "9a6ccf23-fdff-446b-a037-f63deedae28c",
+      "name": "Backup berhasil2",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "data auto backup",
+          "cachedResultUrl": "/projects/HTAERSZoIWqIJ76i/datatables/NihJtwrLAPLZfNVN"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "address",
+              "keyValue": "={{ $('Get Credential').item.json.address }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "date_last_backup": "={{ $now }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date_last_backup",
+              "displayName": "date_last_backup",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "address",
+              "displayName": "address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "port",
+              "displayName": "port",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "password",
+              "displayName": "password",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "brand",
+              "displayName": "brand",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "portftp",
+              "displayName": "portftp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        928,
+        -224
+      ],
+      "id": "229d2763-b883-424e-9479-7a732a86f360",
+      "name": "Update tanggal Backup terakhir3"
+    },
+    {
+      "parameters": {
+        "path": "=Backup-n8n-{{ $('Date & Time').item.json['Hari ini'] }}.conf",
+        "binaryPropertyName": "=file-backup",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        560,
+        -224
+      ],
+      "id": "96123f11-dd48-4af1-996a-82412c21d7be",
+      "name": "Download Backup3",
+      "credentials": {
+        "ftp": {
+          "id": "MTRIXCJp00IcxFaG",
+          "name": "FTP ujicoba"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "path": "=Backup-n8n-{{ $('Get Credential').item.json.address }}-{{ $('Date & Time').item.json['Hari ini'] }}.conf",
+        "binaryPropertyName": "=file-backup",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        736,
+        -224
+      ],
+      "id": "1bcd4837-24cc-4354-9cd7-8ba48e592bf3",
+      "name": "Upload Backup to Server3",
+      "credentials": {
+        "ftp": {
+          "id": "ONzMk7iVm5Jdiyu9",
+          "name": "Transfer to Server"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "=✅ Backup Berhasil! dan disimpan pada server pada tanggal {{ $json.date_last_backup }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": []
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1088,
+        -224
+      ],
+      "id": "d9d33501-092d-4791-ad57-e69fd74c84b5",
+      "name": "Backup berhasil3",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Backup dan Kirim ke server",
+        "height": 720,
+        "width": 1220,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        112,
+        -592
+      ],
+      "id": "9f90d137-0bbc-457e-85bd-e14873da6a01",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $now }}",
+        "format": "custom",
+        "customFormat": "cccc dd-MM-yyyy",
+        "outputFieldName": "=Hari ini",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        832,
+        672
+      ],
+      "id": "a285bc80-9e14-4554-9e27-7d1e70749753",
+      "name": "Date & Time1"
+    },
+    {
+      "parameters": {
+        "content": "# NOTE\n1. To manage Cisco devices, please create a user with access rights that grant direct access to privileged mode.\n\n# Catatan\n1. Untuk mengelola perangkat Cisco, silakan buat user dengan hak akses yang langsung ke mode privileged",
+        "height": 256,
+        "width": 448,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        736
+      ],
+      "id": "072884d8-f5c1-4748-b07c-0fbd18f68679",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "path": "={{\n  (function() {\n    const brand = $('Get Backup terakhir').item.json.brand;\n    const address = $('Get Backup terakhir').item.json.address;\n    const hariIni = $json['Hari ini'];\n\n    if (brand === 'mikrotik') {\n        return 'Backup-n8n-' + address + '-' + hariIni + '.backup';\n    } else if (brand === 'cisco' || brand === 'huawei') {\n        return 'Backup-n8n-' + address + '-' + hariIni + '.cfg';\n    } else if (brand === 'juniper') {\n        return 'Backup-n8n-' + address + '-' + hariIni + '.conf';\n    } else {\n        return null;\n    }\n  })()\n}}",
+        "binaryPropertyName": "file-backup",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        672
+      ],
+      "id": "41e3d9c7-d9f1-4a42-bbca-6a5a37003420",
+      "name": "Download Backup from Server",
+      "credentials": {
+        "ftp": {
+          "id": "ONzMk7iVm5Jdiyu9",
+          "name": "Transfer to Server"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "sendDocument",
+        "chatId": "your chat id",
+        "binaryData": true,
+        "binaryPropertyName": "file-backup",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1456,
+        768
+      ],
+      "id": "ab9c4eeb-e88b-4357-b0b0-0c97f0b8b712",
+      "name": "Send Backup",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "={{ $json.pesan_error }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1072,
+        1104
+      ],
+      "id": "bb3b4821-db9f-463b-b092-ae6424bec13e",
+      "name": "Error /add",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4e0a2725-efcf-4c02-92b6-4b4be112508f",
+              "leftValue": "={{ $json.is_valid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        880,
+        992
+      ],
+      "id": "b07ca78d-7311-412e-8e90-caac4e33e115",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "data auto backup",
+          "cachedResultUrl": "/projects/HTAERSZoIWqIJ76i/datatables/NihJtwrLAPLZfNVN"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "port": "={{ $json.port }}",
+            "portftp": "={{ $json.portftp }}",
+            "address": "={{ $json.address }}",
+            "username": "={{ $json.username }}",
+            "password": "={{ $json.password }}",
+            "brand": "={{ $json.brand }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date_last_backup",
+              "displayName": "date_last_backup",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "address",
+              "displayName": "address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "port",
+              "displayName": "port",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "password",
+              "displayName": "password",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "brand",
+              "displayName": "brand",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "portftp",
+              "displayName": "portftp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1072,
+        976
+      ],
+      "id": "e68c260d-7b35-4e66-bab0-6536e23cb8ef",
+      "name": "add new"
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "={{\n  (function() {\n    const items = $input.all();\n    \n    if (items.length === 0) {\n        return \"<i>📭 Belum ada device.</i>\";\n    }\n    \n    // Tag <pre> wajib agar font monospace dan spasi sejajar di Telegram\n    let msg = \"<pre>\\n\";\n    msg += \"No | IP Address      | Brand\\n\";\n    msg += \"---------------------------------\\n\";\n    \n    items.forEach(item => {\n        const d = item.json;\n        \n        // Mengatur lebar karakter dengan spasi agar kolom rata\n        const no = String(d.id).padEnd(3, ' ');\n        const ip = String(d.address).padEnd(15, ' ');\n        const brand = String(d.brand);\n        \n        msg += `${no}| ${ip} | ${brand}\\n`;\n    });\n    \n    msg += \"</pre>\";\n    \n    return msg;\n  })()\n}}\n✅ Device berhasil ditambahkan, untuk menghapus dapat menggunakan /remove",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1408,
+        976
+      ],
+      "id": "daf7726d-8da8-45a5-8ff9-7930977a792a",
+      "name": "succeed /add",
+
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "data auto backup",
+          "cachedResultUrl": "/projects/HTAERSZoIWqIJ76i/datatables/NihJtwrLAPLZfNVN"
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1248,
+        976
+      ],
+      "id": "24528813-37c1-4536-a5ac-bf0b09a9d15a",
+      "name": "Get All Device"
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $input.item.json.message.text.trim();\nconst args = text.split(/\\s+/);\n\n// 1. Jika user hanya mengetik \"/remove\" tanpa spasi dan angka\nif (args.length === 1) {\n    return { json: { route: \"show_list\" } };\n}\n\n// 2. Mengambil ID dan memastikannya adalah angka bulat (integer)\nconst idInput = parseInt(args[1], 10);\n\n// 3. Validasi: Tolak jika bukan angka (NaN) atau angkanya 0 / negatif\nif (isNaN(idInput) || idInput <= 0) {\n    return { json: { \n        route: \"error\", \n        pesan_error: \"❌ <b>Format Salah!</b>\\n\\nID device harus berupa angka valid.\\nContoh: <code>/remove 1</code>\" \n    }};\n}\n\n// 4. Jika format benar, kirim perintah delete beserta ID-nya\nreturn { json: { \n        route: \"delete\", \n        id: idInput \n}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        1328
+      ],
+      "id": "42c96c8e-9bf5-47b3-8f7e-cfff2124451c",
+      "name": "/remove"
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $input.item.json.message.text.trim();\n// Memecah pesan berdasarkan spasi\nconst args = text.split(/\\s+/);\n\n// Pengecekan jumlah parameter (Command + 6 parameter = 7)\nif (args.length !== 7) {\n    return { json: { \n        is_valid: false, \n        pesan_error: \"❌ <b>Format Salah!</b>\\n\\nGunakan format:\\n<code>/add (address) (port ssh) (username) (password) (brand) (port ftp)</code>\" \n    }};\n}\n\nconst brandInput = args[5].toLowerCase();\nconst validBrands = ['mikrotik', 'cisco', 'huawei', 'juniper'];\n\n// Pengecekan brand\nif (!validBrands.includes(brandInput)) {\n    return { json: { \n        is_valid: false, \n        pesan_error: \"❌ <b>Brand tidak didukung!</b>\\n\\nBrand yang diizinkan hanya: <i>mikrotik, cisco, huawei, juniper</i>.\" \n    }};\n}\n\n// Jika lolos validasi, teruskan data untuk di-insert ke tabel\nreturn { json: {\n    is_valid: true,\n    address: args[1],\n    port: args[2],\n    username: args[3],\n    password: args[4],\n    brand: brandInput,\n    portftp: args[6]\n}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        992
+      ],
+      "id": "c147b84a-a292-44a7-b7a5-5284910723be",
+      "name": "/add"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.route }}",
+                    "rightValue": "show_list",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "40230e4d-cf8f-480e-b11b-7809b542be34"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "e06b76d0-f544-4196-a09c-54f6a6392c48",
+                    "leftValue": "={{ $json.route }}",
+                    "rightValue": "delete",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "e4eb0572-eab1-4bda-94f0-daa97ccc316d",
+                    "leftValue": "={{ $json.route }}",
+                    "rightValue": "error",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        864,
+        1312
+      ],
+      "id": "ae51dcdc-9f65-4ab4-afd3-bef5bab5c3a5",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "data auto backup",
+          "cachedResultUrl": "/projects/HTAERSZoIWqIJ76i/datatables/NihJtwrLAPLZfNVN"
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1056,
+        1264
+      ],
+      "id": "1ae394ab-d922-4312-ad58-98136994a370",
+      "name": "Get All Device1"
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "={{\n  (function() {\n    const items = $input.all();\n    \n    if (items.length === 0) {\n        return \"<i>📭 Belum ada device.</i>\";\n    }\n    \n    // Tag <pre> wajib agar font monospace dan spasi sejajar di Telegram\n    let msg = \"<pre>\\n\";\n    msg += \"No | IP Address      | Brand\\n\";\n    msg += \"---------------------------------\\n\";\n    \n    items.forEach(item => {\n        const d = item.json;\n        \n        // Mengatur lebar karakter dengan spasi agar kolom rata\n        const no = String(d.id).padEnd(3, ' ');\n        const ip = String(d.address).padEnd(15, ' ');\n        const brand = String(d.brand);\n        \n        msg += `${no}| ${ip} | ${brand}\\n`;\n    });\n    \n    msg += \"</pre>\";\n    \n    return msg;\n  })()\n}}\n🔄 Untuk menghapus dari list silahkan gunakan /remove <i>(id)</i>",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1216,
+        1264
+      ],
+      "id": "e0241b93-c22e-4db4-8a7b-c7958515f579",
+      "name": "Show list",
+
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "={{ $json.pesan_error }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1056,
+        1536
+      ],
+      "id": "470a8e10-a550-4a52-a2b6-705e900b7b43",
+      "name": "Error /remove",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "data auto backup",
+          "cachedResultUrl": "/projects/HTAERSZoIWqIJ76i/datatables/NihJtwrLAPLZfNVN"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1056,
+        1408
+      ],
+      "id": "ece8a46b-dfa4-4092-9589-aecd014cc234",
+      "name": "Remove Device"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "data auto backup",
+          "cachedResultUrl": "/projects/HTAERSZoIWqIJ76i/datatables/NihJtwrLAPLZfNVN"
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1216,
+        1408
+      ],
+      "id": "9588dd8b-c578-463e-9205-8e1454d31ec2",
+      "name": "Get All Device2"
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "={{\n  (function() {\n    const items = $input.all();\n    \n    if (items.length === 0) {\n        return \"<i>📭 Belum ada device.</i>\";\n    }\n    \n    // Tag <pre> wajib agar font monospace dan spasi sejajar di Telegram\n    let msg = \"<pre>\\n\";\n    msg += \"No | IP Address      | Brand\\n\";\n    msg += \"---------------------------------\\n\";\n    \n    items.forEach(item => {\n        const d = item.json;\n        \n        // Mengatur lebar karakter dengan spasi agar kolom rata\n        const no = String(d.id).padEnd(3, ' ');\n        const ip = String(d.address).padEnd(15, ' ');\n        const brand = String(d.brand);\n        \n        msg += `${no}| ${ip} | ${brand}\\n`;\n    });\n    \n    msg += \"</pre>\";\n    \n    return msg;\n  })()\n}}\n🗑 Penghapusan Berhasil!!",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1376,
+        1408
+      ],
+      "id": "f07165db-9bb2-4c4b-95bf-a7235714d0e1",
+      "name": "Succeed /remove",
+
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Add list device",
+        "height": 336,
+        "width": 1012,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        640,
+        912
+      ],
+      "id": "24f27e05-de56-4e27-99ca-5db161ae0572",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Remove Device",
+        "height": 448,
+        "width": 916,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        640,
+        1248
+      ],
+      "id": "2724593b-b8ac-46e0-941f-148f7c13183d",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "chatId": "your chat id",
+        "text": "=🕒 {{ $json.address }} Backup terakhir berhasil dilakukan pada: {{ $json.date_last_backup || \"N/A\"}} ",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": []
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        864,
+        1760
+      ],
+      "id": "e60ecaab-cb14-4d54-b8f8-8c6f05a66487",
+      "name": "Last Bacup All device",
+
+      "credentials": {
+        "telegramApi": {
+          "id": "a8TzZswg4UMUYJ8F",
+          "name": "NetwBot"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Backup sekarang",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Backup terakhir",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "/add",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "/remove",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Waktu Backup terakhir",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Backup sekarang": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "main": [
+        [
+          {
+            "node": "Get Credential",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update tanggal Backup terakhir": {
+      "main": [
+        [
+          {
+            "node": "Backup berhasil",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Backup": {
+      "main": [
+        [
+          {
+            "node": "Upload Backup to Server",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Backup to Server": {
+      "main": [
+        [
+          {
+            "node": "Update tanggal Backup terakhir",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Node Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Node Error": {
+      "main": [
+        []
+      ]
+    },
+    "Get Waktu Backup terakhir": {
+      "main": [
+        [
+          {
+            "node": "Last Bacup All device",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Tanggal 1": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Backup berhasil": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Backup terakhir": {
+      "main": [
+        [
+          {
+            "node": "Date & Time1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Tidak ada Backup",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Credential": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Find Brand",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH to Mikrotik": {
+      "main": [
+        [
+          {
+            "node": "Download Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Brand": {
+      "main": [
+        [
+          {
+            "node": "SSH to Cisco",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SSH to Mikrotik",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SSH to Juniper",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SSH to Huawei",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Menu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update tanggal Backup terakhir1": {
+      "main": [
+        [
+          {
+            "node": "Backup berhasil1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Backup1": {
+      "main": [
+        [
+          {
+            "node": "Upload Backup to Server1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Backup to Server1": {
+      "main": [
+        [
+          {
+            "node": "Update tanggal Backup terakhir1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Backup berhasil1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH to Cisco": {
+      "main": [
+        [
+          {
+            "node": "Download Backup1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update tanggal Backup terakhir2": {
+      "main": [
+        [
+          {
+            "node": "Backup berhasil2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Backup2": {
+      "main": [
+        [
+          {
+            "node": "Upload Backup to Server2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Backup to Server2": {
+      "main": [
+        [
+          {
+            "node": "Update tanggal Backup terakhir2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Backup berhasil2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update tanggal Backup terakhir3": {
+      "main": [
+        [
+          {
+            "node": "Backup berhasil3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Backup3": {
+      "main": [
+        [
+          {
+            "node": "Upload Backup to Server3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Backup to Server3": {
+      "main": [
+        [
+          {
+            "node": "Update tanggal Backup terakhir3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Backup berhasil3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH to Huawei": {
+      "main": [
+        [
+          {
+            "node": "Download Backup2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH to Juniper": {
+      "main": [
+        [
+          {
+            "node": "Download Backup3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time1": {
+      "main": [
+        [
+          {
+            "node": "Download Backup from Server",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Backup from Server": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "add new",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error /add",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add new": {
+      "main": [
+        [
+          {
+            "node": "Get All Device",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Device": {
+      "main": [
+        [
+          {
+            "node": "succeed /add",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "/add": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "/remove": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Get All Device1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Remove Device",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error /remove",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Device1": {
+      "main": [
+        [
+          {
+            "node": "Show list",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Device": {
+      "main": [
+        [
+          {
+            "node": "Get All Device2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Device2": {
+      "main": [
+        [
+          {
+            "node": "Succeed /remove",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Last Bacup All device": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "timezone": "Asia/Jakarta",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "205ee1d6-ac17-4f7a-92c2-cb0b59d406f7",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "id": "kriplZDOtEzVoxTy",
+  "tags": []
+}
