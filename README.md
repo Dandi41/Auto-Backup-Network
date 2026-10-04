@@ -1,5 +1,7 @@
 # 🚀 Network Auto-Backup Setup Guide (Cisco, MikroTik, Huawei, Juniper) with n8n & Telegram
 
+🌍 **Read this in other languages:** [English](README.md) | [Bahasa Indonesia](README_id.md)
+
 Welcome! This workflow will turn your Telegram into a personal network assistant. You can add routers/switches, remove them, and have the system perform automatic or manual backups—all right through Telegram chat!
 
 This system uses n8n (an automation platform) and supports 4 of the most popular network device brands: MikroTik, Cisco, Huawei, and Juniper.
