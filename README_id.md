@@ -1,5 +1,7 @@
 # 🚀 Panduan Setup Auto-Backup Jaringan (Cisco, MikroTik, Huawei, Juniper) dengan n8n & Telegram
 
+🌍 **Baca ini menggunakan bahasa lain:** [English](README.md) | [Bahasa Indonesia](README_id.md)
+
 Selamat datang! Workflow ini akan menyulap Telegram Anda menjadi asisten jaringan pribadi. Anda bisa menambahkan router/switch, menghapusnya, dan meminta sistem melakukan backup otomatis atau manual—semuanya hanya lewat chat Telegram!
 
 Sistem ini menggunakan n8n (platform otomatisasi) dan mendukung 4 brand perangkat jaringan terpopuler: MikroTik, Cisco, Huawei, dan Juniper.
